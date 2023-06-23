@@ -36,7 +36,6 @@ module.exports = {
                 {role: "user", content: `${message}`},
               ],
         });
-        console.log(context)
         // Obtener la respuesta generada por ChatGPT
         const reply = chatCompletion.data.choices[0].message;
 
