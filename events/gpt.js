@@ -21,7 +21,7 @@ module.exports = {
         }
         escribiendo = true; // Establecer el estado de escritura a verdadero
 
-		const channelId = '1121662710044708956'; // Reemplaza esto con el ID del canal específico
+		const channelId = process.env.CHANNEL_ID; // Reemplaza esto con el ID del canal específico
 		if (message.channel.id !== channelId) return; // Ignorar mensajes de otros canales
 
         if (context.length > 20) context.shift() // máximo 20 mensajes en la historia
