@@ -14,6 +14,8 @@ module.exports = {
 	name: Events.MessageCreate,
 	async execute(message) {
 		if (message.author.bot) return; // Ignorar mensajes de otros bots
+        if (message.channel.id !== channelId) return; // Ignorar mensajes de otros canales
+        
         if (escribiendo) { // Si el bot está escribiendo, borrar el mensaje
             message.delete()
             .catch((error) => console.error('Error al borrar el mensaje:', error));
@@ -22,7 +24,6 @@ module.exports = {
         escribiendo = true; // Establecer el estado de escritura a verdadero
 
 		const channelId = process.env.CHANNEL_ID; // Reemplaza esto con el ID del canal específico
-		if (message.channel.id !== channelId) return; // Ignorar mensajes de otros canales
 
         if (context.length > 20) context.shift() // máximo 20 mensajes en la historia
         // Obtener el contenido del mensaje
