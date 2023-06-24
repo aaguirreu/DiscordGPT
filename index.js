@@ -2,10 +2,14 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { REST, Routes } = require('discord.js');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const errorHandler = require('./utils/errorHandler.js');
 require('dotenv').config();
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]});
+
+// Log in to Discord with your client's token
+client.login(process.env.TOKEN);
 
 client.commands = new Collection();
 
@@ -43,5 +47,8 @@ for (const file of eventFiles) {
 	}
 }
 
-// Log in to Discord with your client's token
-client.login(process.env.TOKEN);
+// Error handling
+process.on('unhandledRejection', error => {
+	console.error('A websocket connection encountered an error:', error);
+	errorHandler(error, client);
+});
